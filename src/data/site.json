@@ -1,16 +1,20 @@
 {
-  "title": "",
-  "description": "",
-  "baseUrl": "",
+  "title": "eleventy-template",
+  "description": "Base project for eleventy websites",
+  "baseUrl": "http://localhost:8080",
   "seo": {
-    "og": "",
-    "twitter": ""
+    "og": {
+      "src": ""
+    },
+    "twitter": {
+      "src": ""
+    }
   },
   "contact": {
     "phone": {
-      "name": "",
-      "identifier": "",
-      "url":""
+      "name": "Contact Number",
+      "identifier": "+63 912 345 6789",
+      "url":"tel:+639123456789"
     },
     "email": {
       "name": "",
