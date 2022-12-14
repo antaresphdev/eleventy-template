@@ -1,11 +1,11 @@
 const path = require('path')
 const sass = require('sass')
 
+const Stylesheets = require('./__styles.11ty')
+
 class StylesheetSourcemap {
   constructor() {
-    this.inputFiles = {
-      styles: 'styles.scss'
-    }
+    this.inputFiles = new Stylesheets().inputFiles
   }
 
   data() {
@@ -30,12 +30,10 @@ class StylesheetSourcemap {
   }
 
   compile(filepath, config) {
-    console.log("[CSS Configuration:", config)
     return sass.compile(filepath, config)
   }
 
   render({ cssFile }) {
-    console.log("[CSS] Rendering style: ", this.inputFiles[cssFile])
     const scss = path.join(__dirname, `/${this.inputFiles[cssFile]}`)
     const css = this.compile(scss, this.configure())
     return JSON.stringify(css.sourceMap)

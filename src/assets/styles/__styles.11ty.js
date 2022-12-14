@@ -30,12 +30,11 @@ class Stylesheets {
   }
 
   compile(filepath, config) {
-    console.log("[CSS Configuration:", config)
     return sass.compile(filepath, config)
   }
 
   render({ cssFile }) {
-    console.log("[CSS] Rendering style: ", this.inputFiles[cssFile])
+    console.log("[CSS] Rendering style:", this.inputFiles[cssFile])
     const scss = path.join(__dirname, `/${this.inputFiles[cssFile]}`)
     const css = this.compile(scss, this.configure())
     return `${css.css}\n/*# sourceMappingURL=${cssFile}.min.css.map */`
