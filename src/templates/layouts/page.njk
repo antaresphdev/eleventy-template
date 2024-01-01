@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="{{ lang }}">
-{% include "head/head.njk" %}
-<body>
-  {% block content %}
-    {{ content | safe }}
-  {% endblock %}
-</body>
+  {% include "meta/head.njk" %}
+  <body>
+    {% block content %}
+      {{ content | safe }}
+    {% endblock %}
+
+    {% include "meta/scripts.njk" %}
+    {% block scripts %}{% endblock %}
+  </body>
 </html>
