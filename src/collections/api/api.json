@@ -1,0 +1,4 @@
+{
+  "permalink": "/api/{{ version }}/{{ slug }}.json",
+  "layout": null
+}
