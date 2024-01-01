@@ -1,5 +1,6 @@
 const path = require('path')
 const sass = require('sass')
+const fs = require('fs')
 
 class Stylesheets {
   constructor() {
@@ -33,11 +34,19 @@ class Stylesheets {
     return sass.compile(filepath, config)
   }
 
+  renderSourcemap(filename, content) {
+    const filepath = path.join(__dirname, '__sourcemaps/', `${filename}.min.css.map`)
+    fs.writeFileSync(filepath, JSON.stringify(content))
+  }
+
   render({ cssFile }) {
     console.log("[CSS] Rendering style:", this.inputFiles[cssFile])
     const scss = path.join(__dirname, `/${this.inputFiles[cssFile]}`)
-    const css = this.compile(scss, this.configure())
-    return `${css.css}\n/*# sourceMappingURL=${cssFile}.min.css.map */`
+    const result = this.compile(scss, this.configure())
+
+    this.renderSourcemap(cssFile, result.sourceMap)
+    
+    return `${result.css}\n/*# sourceMappingURL=${cssFile}.min.css.map */`
   }
 }
 

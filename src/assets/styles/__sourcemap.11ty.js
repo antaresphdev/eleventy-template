@@ -1,5 +1,6 @@
 const path = require('path')
 const sass = require('sass')
+const fs = require('fs')
 
 const Stylesheets = require('./__styles.11ty')
 
@@ -29,14 +30,18 @@ class StylesheetSourcemap {
     }
   }
 
-  compile(filepath, config) {
-    return sass.compile(filepath, config)
+  compile(filename) {
+    const filepath = path.join(__dirname, '__sourcemaps', `${filename}.min.css.map`)
+    const content = fs.readFileSync(filepath, { encoding: 'utf-8' })
+
+    return content
   }
 
   render({ cssFile }) {
-    const scss = path.join(__dirname, `/${this.inputFiles[cssFile]}`)
-    const css = this.compile(scss, this.configure())
-    return JSON.stringify(css.sourceMap)
+    console.log("[CSS] Rendering sourcemap:", this.inputFiles[cssFile])
+    const result = this.compile(cssFile)
+
+    return result
   }
 }
 
