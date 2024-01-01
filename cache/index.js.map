@@ -1,0 +1,1 @@
+{"version":3,"names":["Console","constructor","console","log"],"sources":["index.js"],"sourcesContent":["class Console {\r\n  constructor() {\r\n    console.log(\"Hello, World!\")\r\n  }\r\n}"],"mappings":"AAAA,KAAM,CAAAA,OAAQ,CACZC,WAAWA,CAAA,CAAG,CACZC,OAAO,CAACC,GAAG,CAAC,eAAe,CAC7B,CACF"}

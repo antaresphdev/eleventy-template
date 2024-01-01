@@ -22,23 +22,24 @@ class Script {
     }
   }
   
-  compile(bundleName) {
+  async compile(bundleName) {
     console.log('[JS] Compiling: ', bundleName)
     const filepath = path.join(__dirname, this.inputFiles[bundleName])
     const transformedCode = babel.transformFileSync(filepath, {})
 
-    this.renderSourceMap(bundleName, transformedCode.map)
+    await this.renderSourceMap(bundleName, transformedCode.map)
 
     return `${transformedCode.code}\n//# sourceMappingURL=${bundleName}.js.map`
   }
 
-  renderSourceMap(filename, content) {
-    const filepath = path.join(__dirname, '__sourcemaps/', `${filename}.js.map`)
+  async renderSourceMap(filename, content) {
+    const appPath = await require('../../../scripts/utilities').getAppPath()
+    const filepath = path.join(appPath, 'cache/', `${filename}.js.map`)
     fs.writeFileSync(filepath, JSON.stringify(content))
   }
   
-  render({ bundleName }) {
-    return this.compile(bundleName)
+  async render({ bundleName }) {
+    return await this.compile(bundleName)
   }
 }
 

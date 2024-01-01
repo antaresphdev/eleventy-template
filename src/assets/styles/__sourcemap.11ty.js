@@ -1,6 +1,5 @@
 const path = require('path')
 const fs = require('fs')
-
 const Stylesheets = require('./__styles.11ty')
 
 class StylesheetSourcemap {
@@ -29,16 +28,17 @@ class StylesheetSourcemap {
     }
   }
 
-  compile(filename) {
-    const filepath = path.join(__dirname, '__sourcemaps', `${filename}.min.css.map`)
+  async compile(filename) {
+    const appPath = await require('../../../scripts/utilities').getAppPath()
+    const filepath = path.join(appPath, 'cache', `${filename}.min.css.map`)
     const content = fs.readFileSync(filepath, { encoding: 'utf-8' })
 
     return content
   }
 
-  render({ cssFile }) {
+  async render({ cssFile }) {
     console.log("[CSS] Rendering sourcemap:", this.inputFiles[cssFile])
-    const result = this.compile(cssFile)
+    const result = await this.compile(cssFile)
 
     return result
   }

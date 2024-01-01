@@ -34,17 +34,19 @@ class Stylesheets {
     return sass.compile(filepath, config)
   }
 
-  renderSourcemap(filename, content) {
-    const filepath = path.join(__dirname, '__sourcemaps/', `${filename}.min.css.map`)
+  async renderSourcemap(filename, content) {
+    const appPath = await require('../../../scripts/utilities').getAppPath()
+    console.log('[APP PATH]', appPath)
+    const filepath = path.join(appPath, 'cache', `${filename}.min.css.map`)
     fs.writeFileSync(filepath, JSON.stringify(content))
   }
 
-  render({ cssFile }) {
+  async render({ cssFile }) {
     console.log("[CSS] Rendering style:", this.inputFiles[cssFile])
     const scss = path.join(__dirname, `/${this.inputFiles[cssFile]}`)
     const result = this.compile(scss, this.configure())
 
-    this.renderSourcemap(cssFile, result.sourceMap)
+    await this.renderSourcemap(cssFile, result.sourceMap)
     
     return `${result.css}\n/*# sourceMappingURL=${cssFile}.min.css.map */`
   }
