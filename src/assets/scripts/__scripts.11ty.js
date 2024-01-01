@@ -1,5 +1,6 @@
 const babel = require('@babel/core')
 const path = require('path')
+const fs = require('fs')
 
 class Script {
   constructor() {
@@ -26,7 +27,14 @@ class Script {
     const filepath = path.join(__dirname, this.inputFiles[bundleName])
     const transformedCode = babel.transformFileSync(filepath, {})
 
+    this.renderSourceMap(bundleName, transformedCode.map)
+
     return `${transformedCode.code}\n//# sourceMappingURL=${bundleName}.js.map`
+  }
+
+  renderSourceMap(filename, content) {
+    const filepath = path.join(__dirname, '__sourcemaps/', `${filename}.js.map`)
+    fs.writeFileSync(filepath, JSON.stringify(content))
   }
   
   render({ bundleName }) {

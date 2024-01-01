@@ -1,11 +1,9 @@
-const babel = require('@babel/core')
 const path = require('path')
-
+const fs = require('fs')
+const Script = require('./__scripts.11ty')
 class ScriptSourceMap {
   constructor() {
-    this.inputFiles = {
-      index: 'index.js'
-    }
+    this.inputFiles = new Script().inputFiles
   }
 
   data() {
@@ -21,12 +19,12 @@ class ScriptSourceMap {
     }
   }
   
-  compile(bundleName) {
-    console.log('[JS] Compiling: ', bundleName)
-    const filepath = path.join(__dirname, this.inputFiles[bundleName])
-    const transformedCode = babel.transformFileSync(filepath, {})
+  compile(filename) {
+    console.log('[JS] Compiling sourcemap: ', filename)
+    const filepath = path.join(__dirname, '__sourcemaps', `${filename}.js.map`)
+    const content = fs.readFileSync(filepath, { encoding: 'utf-8' })
 
-    return JSON.stringify(transformedCode.map)
+    return content
   }
   
   render({ bundleName }) {

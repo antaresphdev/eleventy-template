@@ -1,5 +1,4 @@
 const path = require('path')
-const sass = require('sass')
 const fs = require('fs')
 
 const Stylesheets = require('./__styles.11ty')
